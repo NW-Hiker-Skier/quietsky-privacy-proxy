@@ -1,7 +1,8 @@
 # Quiet Sky Privacy Proxy (Cloudflare Worker)
 
-The privacy core of Quiet Sky's weather proxy. Every request from the Quiet Sky
-Android app reaches weather providers only through this Worker — and this code
+The privacy core of [Quiet Sky](https://getquietsky.app)'s weather proxy. Every
+request from the Quiet Sky Android app reaches weather providers only through this
+Worker — and this code
 is what guarantees **providers never receive your IP address, device headers,
 cookies, or identity of any kind**.
 
