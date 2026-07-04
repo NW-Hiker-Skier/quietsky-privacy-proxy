@@ -1,0 +1,17 @@
+{
+  "name": "quietsky-privacy-proxy",
+  "version": "0.1.0",
+  "private": false,
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:test": "tsc --outDir dist --rootDir src",
+    "test": "npm run build:test && node test/invariants.test.mjs"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260508.1",
+    "typescript": "^5.7.2",
+    "wrangler": "^4.13.2"
+  }
+}
