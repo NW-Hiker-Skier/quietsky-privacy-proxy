@@ -12,6 +12,13 @@ and excluded from the public release; a SHA-256 manifest of them is published
 with each release so the withheld portion is versioned and tamper-evident. A
 synthetic `example` adapter documents the full contract adapters must satisfy.
 
+The manifest (`ADAPTERS.sha256`) hashes the six withheld sources: `foreca.ts`,
+`sunsethue.ts`, `rainbow.ts`, `radar.ts`, and the private `adapters/index.ts` +
+`bindings.ts` registry. Note that `src/adapters/index.ts` also appears in *this*
+public tree — but as a **synthetic stub** (every provider returns
+`provider_unavailable`), so it intentionally hashes differently from the withheld
+registry the manifest lists.
+
 ## The trust boundary
 
 ```
@@ -94,10 +101,11 @@ same TTLs. There is no user-linked record anywhere in this Worker.
 Worker application logs are aggregate-only: `{day, provider, metric, value}`
 counters plus provider-outcome diagnostics (status, duration, and a coarse
 failure reason). No IPs, no coordinates, no URLs, no headers, no tokens. The
-logging code lives outside the gate block, so by the chokepoint invariant above
-it cannot read your identity in the first place; the full private suite
-additionally feeds sentinel identity through every route class and fails if any
-sentinel reaches a log line. No Logpush, no analytics store, no request journal.
+metric loggers never touch the client request; the one logging helper that does —
+the token-presence counter — runs inside the gate and reads only WHETHER a client
+token is present (a boolean), never its value or any identity. The full private
+suite additionally feeds sentinel identity through every route class and fails if
+any sentinel reaches a log line. No Logpush, no analytics store, no request journal.
 Cloudflare's own edge retains standard operational logs (~7 days) under its
 policy; that is disclosed in the privacy policy and is not something Worker code
 can disable.
